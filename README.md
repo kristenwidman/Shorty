@@ -1,5 +1,5 @@
 #A link shortener and click recorder, a la bit.ly#
-
+####
 ##[In Progress]##
 
 ##Overview:##
@@ -9,8 +9,7 @@
     written to compute the url in a semi-random fashion using encoding
     to base 32 (undercase letters + numbers minus the confusing ones) and
     bit-swapping.
-[TODO:
-3. Urls posted online. Clicks are redirected to real url and information
+3. [TODO: Urls posted online. Clicks are redirected to real url and information
     about the clicker is logged.
 4. Text sent to me whenever a link is clicked.
 5. Email digest about link-clicks and stats about browsers and operating
