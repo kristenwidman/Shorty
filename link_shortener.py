@@ -10,7 +10,7 @@ import struct
 import bitstring
 import pymongo
 
-DEBUG = False#True
+DEBUG = True
 
 chars = 'm6yf3rjupeiq854xzna9dw2ctbsv7hgk'
 
@@ -50,10 +50,10 @@ def return_full_url(short_url):
     return url
 
 def _determine_short_url(number):
-    '''One way to make short urls using the _encode function. This way 
-        makes the bitstring at least 24 bits long, and reverses the last
-        24 bits, then encodes the bits using the remainder method in
-        _encode.
+    '''One way to make short urls using the _encode function.
+    This way makes the bitstring at least 24 bits long, and
+    reverses the last 24 bits, then encodes the bits using the
+    remainder method in_encode.
     '''
     ba = bitstring.BitArray(hex(number))
     dif = 24 - len(ba.bin)
@@ -193,6 +193,7 @@ def _determine_db_id_from_short_url_2(short_url):
         more info.
     '''
     if DEBUG: print 'decoding'
+    if DEBUG: print short_url
     num = _decode_by_bits(short_url)
     bb = bitstring.BitArray(hex(num))
     b_back = _bitshift(bb).bin
