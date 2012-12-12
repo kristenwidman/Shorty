@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Link Shortener</title>
+        <meta name="description" content="Link Shortener - Twitter search">
+        <link href="static/bootstrap.css" rel="stylesheet">
+    </head>
     <body>
-
-        <h1>Twitter URLs</h1>
-        <ul>
-            {% for link in links %}
-                <li><a href={{ link }}>{{ link }}</a></li>
-            {% endfor %}
-        </ul>
-
+        <form class="well">
+            <label>Search Twitter and receive links to the top 5 tweet matches!</label>
+            <input type="text" class="span3" placeholder="Type something…">
+            <span class="help-inline">Enter your Twitter search term here</span>
+            <br />
+            <button type="submit" class="btn">Submit</button>
+        </form>
     </body>
 </html>

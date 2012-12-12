@@ -3,6 +3,7 @@
 #kristenwidman
 #12/5/2012
 
+import sys
 import pymongo
 from flask import Flask, render_template, redirect, request
 import twitter_get_urls
@@ -22,20 +23,22 @@ def favicon():
 
 @app.route("/tweets")
 def display_shorts():
+#display form
+#take user input and return 5 (full) links
+    return render_template('twitter.html')
     #get links
-    l = twitter_get_urls.get_tweet_urls("hackerschool")
-    #render_template with links - call in loop? or somehow determine which
-    for header in request.headers:
-        print header
-    return render_template('twitter.html', links=l)
+    #l = twitter_get_urls.get_tweet_urls("hacker")
+    #for header in request.headers:
+        #print header
+    #return render_template('twitter.html', links=l)
 
 #@app.route("/link_shortener")
 #def shorten_links():
 
 @app.route("/static-tweets")
 def display_static_tweets():
-    sl = ["yf3u", "myf3u"]
-    return render_template('twitter.html', links=sl)
+    sl = ["m6y3ju", "m3ju"]
+    return render_template('links.html', links=sl)
 
 @app.route("/<variable>")
 def url_redirection(variable):
@@ -53,12 +56,7 @@ def url_redirection(variable):
         print 'added to db!'
     except:
         print 'error parsing user agent!'
-
-    '''for header in request.headers:
-        if header[0] in rel_headers:
-            print header
-    '''
-    return redirect(url), 301
+    return redirect(url), 307
 
 if __name__=="__main__":
     app.run(host='0.0.0.0', port=80)
