@@ -136,8 +136,10 @@ def create_link_2(long_url):
     if DEBUG: print long_url, short_url_end
     return short_url_end
 
-def return_full_url_2(short_url):
-    db_id = _determine_db_id_from_short_url_2(short_url)
+def return_id(short_url):
+    return _determine_db_id_from_short_url_2(short_url)
+
+def return_full_url_2(db_id):
     cursor = links.find({'_id':db_id},{'_id':False,'url':True})
     url = cursor.next()[u'url'].encode('utf-8')
     if DEBUG: print url
