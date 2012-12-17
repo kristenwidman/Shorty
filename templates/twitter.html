@@ -7,12 +7,15 @@
         <link href="static/bootstrap.css" rel="stylesheet">
     </head>
     <body>
-        <form class="well">
+        <form class="well" method='post' action='tweets'>
             <label>Search Twitter and receive links to the top 5 tweet matches!</label>
-            <input type="text" class="span3" placeholder="Type something…">
+            <input type="text" class="span3" placeholder="Type something…" name='twitter_search'>
             <span class="help-inline">Enter your Twitter search term here</span>
             <br />
-            <button type="submit" class="btn">Submit</button>
+            <input type="text" class="span3" placeholder="Email" name="email">
+            <span class="help-inline">Enter your email here to receive daily digest emails of link activity</span>
+            <br />
+            <button type="submit" class="btn">Find Tweets!</button>
         </form>
     </body>
 </html>

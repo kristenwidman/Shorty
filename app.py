@@ -3,47 +3,52 @@
 #kristenwidman
 #12/5/2012
 
-import sys
-import pymongo
+from datetime import datetime
+from pymongo import Connection
 from flask import Flask, render_template, redirect, request
-import twitter_get_urls
-import link_shortener
+from twitter_get_urls import get_tweet_urls
+from link_shortener import return_id, return_full_url_2
 
 app = Flask(__name__)
 
-conn = pymongo.Connection("mongodb://localhost", safe=True)
+conn = Connection("mongodb://localhost", safe=True)
 
-db = conn.link_shortener
+db = conn.link
 links = db.links
 
+app.vars = {}
 
 @app.route("/favicon.ico")
 def favicon():
     return app.send_static_file("favicon.ico")
 
-@app.route("/tweets")
-def display_shorts():
-#display form
-#take user input and return 5 (full) links
-    return render_template('twitter.html')
+@app.route("/tweets", methods=['GET','POST'])
+def input_search():
+    if request.method == 'GET':
+        return render_template('twitter.html')
+    else:
+        search_term = request.form['twitter_search']
+        email = request.form['email']
+        now  = datetime.utcnow()
+        app.vars['search'] = search_term
     #get links
-    #l = twitter_get_urls.get_tweet_urls("hacker")
+        l = get_tweet_urls(search_term, email, now)
     #for header in request.headers:
         #print header
-    #return render_template('twitter.html', links=l)
+        return render_template('links.html', links=l, title=app.vars['search'])
 
 #@app.route("/link_shortener")
 #def shorten_links():
 
 @app.route("/static-tweets")
 def display_static_tweets():
-    sl = ["m6y3ju", "m3ju"]
-    return render_template('links.html', links=sl)
+    sl = ["m6f", "yf"]
+    return render_template('links.html', links=sl, title='Static Links')
 
-@app.route("/<variable>")
+@app.route("/<variable>") #"http://www.kristenwidman.com/<variable>")
 def url_redirection(variable):
-    db_id = link_shortener.return_id(variable)
-    url = link_shortener.return_full_url_2(db_id)
+    db_id = return_id(variable)
+    url = return_full_url_2(db_id)
     print 'url to redirect to', url
     rel_headers = ['Referer', 'User-Agent', 'Accept-Language']
     try:
@@ -59,4 +64,4 @@ def url_redirection(variable):
     return redirect(url), 307
 
 if __name__=="__main__":
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, debug=True)
