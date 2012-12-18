@@ -36,7 +36,7 @@ def create_link_2(long_url, email, date):
     link_id = counter[u'c']
     if DEBUG: print 'link_id:',link_id
     links.insert({'_id':link_id, 'url':long_url, 'date':date, 'email':email})
-    short_url_end = _short_url_by_bit_encoding(link_id)
+    short_url_end = short_url_by_bit_encoding(link_id)
     if DEBUG: print long_url, short_url_end
     #short_url = path.join(BASE_URL, short_url_end)
     return short_url_end
@@ -52,7 +52,7 @@ def return_full_url_2(db_id):
     return url
     #will need to perform a redirect
 
-def _short_url_by_bit_encoding(number):
+def short_url_by_bit_encoding(number):
     '''alternative way to encode. Goes with _encode_by_bits. see notes
         there. Note this does not force bitstrings to be >=24 bits long.
     '''

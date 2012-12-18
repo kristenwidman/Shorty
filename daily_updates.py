@@ -8,6 +8,7 @@ from pymongo import Connection
 from email.message import Message
 from smtplib import SMTP
 from constants import username, password
+from link_shortener import short_url_by_bit_encoding
 
 conn = Connection("mongodb://localhost", safe=True)
 
@@ -28,9 +29,10 @@ def send_email(cur):
     for doc in cur:
         email = doc[u'email']
         url = doc[u'url']
+        short_url = short_url_by_bit_encoding(doc[u'_id'])
         info = {'platform':doc[u'platform'],'version':doc[u'version'],
                 'language':doc[u'language'],'browser':doc[u'browser']}
-        text = "Your url (%s) received the following traffic in the last 24 hours:\n" % (url)
+        text = "Your shortened url, %s, mapping to url, %s, received the following traffic in the last 24 hours:\n" % (short_url,url)
         for item in info:
             if info[item] != '[None]':
                 text += '%s: %s,\n' % (item, info[item])
