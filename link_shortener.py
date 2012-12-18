@@ -11,7 +11,7 @@ import struct
 import bitstring
 import pymongo
 
-DEBUG = True
+DEBUG = False #True
 BASE_URL = "http://www.kristenwidman.com"
 
 chars = 'm6yf3rjupeiq854xzna9dw2ctbsv7hgk'
