@@ -32,10 +32,15 @@ def send_email(cur):
         short_url = short_url_by_bit_encoding(doc[u'_id'])
         info = {'platform':doc[u'platform'],'version':doc[u'version'],
                 'language':doc[u'language'],'browser':doc[u'browser']}
-        text = "Your shortened url, %s, mapping to url, %s, received the following traffic in the last 24 hours:\n" % (short_url,url)
+        text = "Your shortened url, %s, mapping to url, %s, received the following traffic in the last 24 hours:" % (short_url,url)
         for item in info:
-            if info[item] != '[None]':
-                text += '%s: %s,\n' % (item, info[item])
+            l = []
+            text += '\n%s: ' % (item)
+            for r in info[item]:
+                if r is not None:
+                    i = r.encode('ascii')
+                    l.append(i)
+            text += ', '.join(l)
         print text
         email_username = username
         email_password = password
@@ -44,11 +49,13 @@ def send_email(cur):
         msg['From'] = "widmanChristmasNames@gmail.com"
         msg['Subject'] = "Daily Link Shortener Digest"
         msg.set_payload(text)
+        '''
         server = SMTP('smtp.gmail.com:587')
         server.starttls()
         server.login(email_username,email_password)
         server.sendmail(email_username, email, msg.as_string())
         server.quit()
+        '''
 
 '''
 def send_email(cur):
