@@ -56,8 +56,10 @@ def url_redirection(variable):
         platform = request.user_agent.platform
         version = request.user_agent.version
         language = request.user_agent.language
+        now  = datetime.utcnow()
         print 'browser: %s,\nplatform: %s,\nversion: %s,\nlanguage: %s' % (browser, platform, version, language)
-        links.update({'_id':db_id},{'$push': {'browser':browser, "platform":platform, "version":version, "language":language}})
+        links.update({'_id':db_id},{'$push': {'clicks': {'date':now, 'browser':browser,
+            "platform":platform, "version":version, "language":language}}})
         print 'added to db!'
     except:
         print 'error parsing user agent!'

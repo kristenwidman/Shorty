@@ -35,7 +35,7 @@ def create_link_2(long_url, email, date):
     counter = counters.find_and_modify({'_id':'counter'},{'$inc':{'c':1}})
     link_id = counter[u'c']
     if DEBUG: print 'link_id:',link_id
-    links.insert({'_id':link_id, 'url':long_url, 'date':date, 'email':email})
+    links.insert({'_id':link_id, 'url':long_url, 'date_created':date, 'email':email})
     short_url_end = short_url_by_bit_encoding(link_id)
     if DEBUG: print long_url, short_url_end
     #short_url = path.join(BASE_URL, short_url_end)
